@@ -1,0 +1,77 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Qualisys Quick Guide}
+% \author{Ola Johansson}
+% \date{September 2022}
+
+\begin{document}
+
+\maketitle
+
+Qualisys is a motion capture system that uses cameras to detect the reflections of infrared light from markers, small reflective balls. By using several cameras, the detections can be used to calculate the marker's position in the 3D space. Several markers can be used to define a rigid body, which position and orientation can be tracked.
+
+\section{Startup}
+\label{startup}
+To get the system up and running, follow these steps:
+
+\begin{itemize}
+    \item Pull down the shades, to minimize external lighting, (buttons can be found behind the right desk).
+    \item If the cameras appear to be off, turn them on with the controller (button labeled "master").
+    \item Open QTM.
+    \item Click "New project..." and choose "Base the new project on: Settings imported from another project". Choose the settings file inside the folder under "disk A" called "LIU New setup".
+    \item Click "new" (white paper symbol in left corner).
+\end{itemize}
+
+\section{Configure cameras}
+\begin{itemize}
+    \item Make sure no markers are present in the arena.
+    \item Go into the 2D view.
+    \item Click the "Auto-Mask" button in the right side bar, and allow to remove all previous masks. 
+    \item Go through camera by camera (double click to switch between single/all camera view), and apply masks manually where needed. There should be none, or very few detections when you are done. Only 5 masks per camera can be applied, so distribute them wisely. Shortcut for adding mask: hold shift+m.
+    \item If the detections are too many, you can try to decrease the exposure time (in the right side bar in the 2D view).
+\end{itemize}
+
+\section{Calibration}
+\begin{itemize}
+    \item Calibration needs to be performed each time a new project is created. After that, calibration is not needed each time you start QTM, but might still be good to do form time to time, especially if you notice the accuracy decreasing.
+    \item First, place the L-frame in the middle of the room, such that its inner edges align with the hatch. (You should be able to find the L-frame in a padded box in the back of control room.) The longer side of the L-frame represents the x-axis of the global coordinate system, and should be pointed away from the control room (for convention).
+    \item Make sure that the room is free from markers, except for the L-frame and the calibration wand.
+    \item Start the calibration by pressing the calibration button (next to the record button), choosing a calibration time (4 minutes is usually enough), and clicking "OK".
+    \item Grab the calibration wand and start waving it slowly around the room, while walking around. Make sure not to wear any reflective clothes (shoes with Nike reflectors for example).
+    \item When the calibration time has passed, QTM will do some calculations and then tell you how the calibration went. If the calibration passed, you are good to go.
+\end{itemize}
+
+\section{Define rigid body}
+\begin{itemize}
+    \item When attaching the reflectors to your object, remember to put them in an asymmetric pattern. This will prevent QTM from accidentally flipping your object 180 deg around an axis which is especially important when controlling drones, as they might suddenly be in a hurry towards the ground if QTM thinks the drone is upside down.
+    \item Before defining the body, you should put it in its desired orientation, with respect to the global coordinate system. If you for example define a car, you typically want its local coordinate system to have its x-axis facing forward, which means you should put it in the arena with its front in the positive x-direction.
+    \item To define the body in QTM, first make sure all of its markers are visible in the 3D-view. Then hold shift and drag a box around its markers, right click on them and choose "Define rigid body (6DOF) $\rightarrow$ Current Frame". Choose a name for it, and boom, you're done. The object's local coordinate system should now be visible in the 3D view.
+    \item You can make modifications (rotating it or translating its origin) to the rigid body later on, by going to the 6DOF-tracking section in the settings.
+\end{itemize}
+
+\section{Real-time Output}
+\begin{itemize}
+    \item If you started with the "LIU new setup" settings, real time output of markers and rigid bodies should be activated by default.
+    \item To confirm that QTM is streaming the wanted output you can open the example client found in C:\textbackslash Program Files (x86)\textbackslash Qualisys\textbackslash Qualisys Track Manager\textbackslash RT Protocol. The name of the client is RTClientExample. Open the client, follow the instructions (choose default settings) and choose what output you would like to see.
+\end{itemize}
+
+\section{Troubleshoot}
+\subsection{No cameras (or just a few) are showing}
+\label{lost_cameras}
+Close QTM, restart the cameras, wait 2 minutes, start QTM. There is 20 cameras in total. The remote controller for the cameras should be found on the desk in the control room. Push "master I" to turn on and "master O" to turn off.
+\subsection{Error message: Error(s) when staring realtime}
+"The camera did not reply in the expected way during a(n) 'set settings' operation. Camera information: Apply failed". The cameras need to be restarted. Exit qualisys, then restart the cameras using the controller (master 0 for off, master 1 for on).
+\subsection{Calibration always fails}
+Make sure the L-frame is visible to the cameras by adjusting the exposure time (which can be done in the 2D view). There is a tradeoff between good detection (long exposure) and low noise (short exposure). Start with very short exposure time, and gradually increase unitl you can see the markers on the L-frame in the 2D view. Also make sure that the person calibrating isn't wearing any clothes with reflectors (reflective patches on the shoes for example).
+\subsection{Cameras fail to detect the markers}
+First, try to increase the exposure time. If that can not be done without the disturbances becoming to prominent, try to clean or replace the markers. Also, make sure the system is calibrated.
+\subsection{No-real time output}
+First, make sure that real time output is enabled in settings$\rightarrow$processing$\rightarrow$real-time-output. In the processing tab, also make sure that the box for "calculate 6DOF" is checked. If that does not help, it could be the problem of someone else being logged in on the computer and running QTM. To solve that, simply restart the computer.
+
+\subsection{Large number of false detections}
+There can be several reasons for this error. First, check that all cameras are actually active. If not, see section \ref{lost_cameras}. If that doesn't seem to be the problem, the cameras have probably lost their groups. This can be fixed by restarting QTM, and before starting the live view, go to file->settings management->import settings from another project, and then choosing the settings file mentioned in section \ref{startup}.
+
+\subsection{Not able to recieve the data on other computer}
+First of all, make sure you are connected to the visionen WIFI. Secondly, make sure you have defined the right IP address for the positioning system in your application. The address is set to be static and should be 192.168.0.50.
+\end{document}
