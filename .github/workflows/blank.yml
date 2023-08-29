@@ -22,7 +22,7 @@ jobs:
   
       - name: Upload file to repository
         run: |
-          git config --global user.name "skogstomte"
+          git config --global user.name "SkogsTomte"
           git config --global user.email "ola@qxx.se"
           git add main.pdf
           git commit -m "uppload pdf"
