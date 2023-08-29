@@ -55,7 +55,7 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          name: Resume compiled on ${{ steps.time.outputs.time }}
+          name: Compiled on ${{ steps.time.outputs.time }}
           tag_name: ${{ steps.time.outputs.time }}
       - name: Upload Release Asset
         id: upload-release-asset
@@ -65,7 +65,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./main.pdf
-          asset_name:  resume-${{ steps.time.outputs.time }}.pdf
+          asset_name:  main-${{ steps.time.outputs.time }}.pdf
           asset_content_type: application/pdf
           
       - name: Install ghostscript
@@ -95,7 +95,7 @@ jobs:
           sudo sed -i "s/$MEM/$MEMR/" /etc/ImageMagick-6/policy.xml
           
       - name: Convert PDF to PNG
-        run: convert -density 900 -background white -alpha off main.pdf -resize 25% -quality 90 -colorspace RGB resume.png
+        run: convert -density 900 -background white -alpha off main.pdf -resize 25% -quality 90 -colorspace RGB main.png
       - name: Commit PNG
         id: commit
         run: |
