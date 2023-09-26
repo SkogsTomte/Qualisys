@@ -43,12 +43,15 @@ To get the system up and running, follow these steps:
 \end{itemize}
 
 \section{Define rigid body}
+\section{Passive markers}
 \begin{itemize}
     \item When attaching the reflectors to your object, remember to put them in an asymmetric pattern. This will prevent QTM from accidentally flipping your object 180 deg around an axis which is especially important when controlling drones, as they might suddenly be in a hurry towards the ground if QTM thinks the drone is upside down.
     \item Before defining the body, you should put it in its desired orientation, with respect to the global coordinate system. If you for example define a car, you typically want its local coordinate system to have its x-axis facing forward, which means you should put it in the arena with its front in the positive x-direction.
     \item To define the body in QTM, first make sure all of its markers are visible in the 3D-view. Then hold shift and drag a box around its markers, right click on them and choose "Define rigid body (6DOF) $\rightarrow$ Current Frame". Choose a name for it, and boom, you're done. The object's local coordinate system should now be visible in the 3D view.
     \item You can make modifications (rotating it or translating its origin) to the rigid body later on, by going to the 6DOF-tracking section in the settings.
 \end{itemize}
+\section{Active markers}
+    For the active markers the process is very similar, but you no longer have to put the markers in an asymmetric pattern, as each marker has a unique ID. What you need to do, however, is to specify in the settings that you use active markers. You do this under: cameras -> marker mode. Only choose active+passive markers if you need to, because choosing only "active" will turn of the IR strobe during exposure, which results in less disturbances.
 
 \section{Real-time Output}
 \begin{itemize}
