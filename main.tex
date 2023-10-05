@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
+\usepackage{hyperref}
 
 \title{Qualisys Quick Guide}
 % \author{Ola Johansson}
@@ -58,6 +59,24 @@ To get the system up and running, follow these steps:
     \item If you started with the "LIU new setup" settings, real time output of markers and rigid bodies should be activated by default.
     \item To confirm that QTM is streaming the wanted output you can open the example client found in C:\textbackslash Program Files (x86)\textbackslash Qualisys\textbackslash Qualisys Track Manager\textbackslash RT Protocol. The name of the client is RTClientExample. Open the client, follow the instructions (choose default settings) and choose what output you would like to see.
 \end{itemize}
+
+\section{Network Cameras}
+There are two cameras installed in Visionen that can be used for recording experiments. One is located right beneath the wall projector, and one is located right between the projectors in the ceiling. These cameras stream their video feed on the Visionen network. They are unfortunately not suitable for real-time applications because of their delay but are very useful for recording experiments.
+\subsection{Accessing video feed}
+There are two main ways of accessing the video feed.
+\begin{itemize}
+    \item (Recommended) VLC media player. Open VLC and click on "Media" and "Open Network Stream" (Ctrl+N). Navigate to the "Network" tab and paste the following URL in the field: \url{rtsp://student:studentivisionen@192.168.0.xx:554/h265Preview_01_main}
+
+    Replace xx with one of the following numbers: 26 - for top view, 35 - for side view. Press play.
+    \item Web interface. Type the IP address of the preferred camera in the address field in your browser (192.168.0.xx). Log in using the following credentials.
+    
+    Username: student
+
+    Password: studentivisionen
+\end{itemize}
+
+\subsection{Recoding}
+This can not be done in the web interface, so VLC is recommended. Open the network stream as described above. When you can see the camera output, right-click on the video and click record. This will start the recording (but you won't get any indication that it actually started recording). To stop recording, just repeat the process (right-click on the video screen and hit record). The video file has now been saved to the "Videos" folder on the computer. 
 
 \section{Troubleshoot}
 \subsection{No cameras (or just a few) are showing}
